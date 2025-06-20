@@ -43,19 +43,6 @@
                             <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-password"></label>
                             <input type="text" name="gcode" id="LAY-user-login-gcode" lay-verify="required" placeholder="谷歌验证码-未开启可忽略" class="layui-input" data-sharkid="__2" />
                         </div>
-                        <div class="layui-form-item">
-                            <div class="layui-row">
-                                <div class="layui-col-xs7">
-                                    <label class="layadmin-user-login-icon layui-icon layui-icon-vercode" for="LAY-user-login-vercode"></label>
-                                    <input type="text" name="vercode" id="LAY-user-login-vercode" lay-verify="required" placeholder="图形验证码" class="layui-input" data-sharkid="__3" maxlength="4" />
-                                </div>
-                                <div class="layui-col-xs5">
-                                    <div style="margin-left: 10px;">
-                                        <img src="./captcha.php" onclick="this.src='./captcha.php';" class="layadmin-user-login-codeimg" id="LAY-user-get-vercode" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
                         <div class="layui-form-item">
                             <span class="layui-btn layui-btn-fluid" id="LAY-user-login-submit">登录</span>
@@ -82,37 +69,15 @@
 
                     var acname = $.trim($("#LAY-user-login-username").val());
                     var pwd = $.trim($("#LAY-user-login-password").val());
-                    var code = $.trim($("#LAY-user-login-vercode").val());
     
                     if (!acname) return layer.msg('请输入您的手机号/账号');
                     if (!pwd) return layer.msg('请填写您的密码');
                     if (!code) return layer.msg('请填写图形验证码');
 
-                    $.ajax({
-                        url: `./verify.php`,
-                        method: 'POST',
-                        data: { captcha: code },
-                        success: function(data) {
-                            if (data === '1') {
-                                // handle success
-                                isDisabled = true;
-                                layer.msg('登录成功', { icon: 1 });
-                                setTimeout(() => location.href = './dashboard.html', 1500);
-                                return;
-                            }
-
-                            // handle failure
-                            $('#LAY-user-get-vercode').click();
-                            $("#LAY-user-login-vercode").val('')
-                            layer.msg('验证码错误');
-                        },
-                    })
-                });
-
-                $("#LAY-user-login-vercode,#LAY-user-login-password,#LAY-user-login-username").on("keyup", function (e) {
-                    if (e.keyCode == 13) {
-                        $("#LAY-user-login-submit").trigger("click");
-                    }
+                    // handle success
+                    isDisabled = true;
+                    layer.msg('登录成功', { icon: 1 });
+                    setTimeout(() => location.href = './dashboard.html', 1500);
                 });
             })
         </script>
